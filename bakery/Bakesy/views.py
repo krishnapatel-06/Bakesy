@@ -7,3 +7,5 @@ def home(request):
 
 def products(request):
     return render(request,'Bakesy/products.html')
+def order(request):
+    return render(request,'Bakesy/order.html')

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bakesy | The Order Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FAF7F2;
+            --dusty-rose: #E2B4BD;
+            --charcoal: #1A1A1A;
+            --white: #FFFFFF;
+            --transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cream);
+            color: var(--charcoal);
+            overflow: hidden; 
+        }
+
+        /* --- Split Screen Layout --- */
+        .order-wrapper {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* --- Left Side: Visuals --- */
+        .visual-side {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background: #E8E2D9;
+        }
+
+        .visual-side img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+            filter: brightness(0.9);
+        }
+
+        .visual-overlay {
+            position: absolute;
+            bottom: 60px;
+            left: 60px;
+            color: var(--white);
+            z-index: 2;
+        }
+
+        .visual-overlay h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 4rem;
+            line-height: 1;
+        }
+
+        /* --- Right Side: Form --- */
+        .form-side {
+            width: 40%;
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--white);
+            position: relative;
+        }
+
+        .logo-top {
+            position: absolute;
+            top: 40px;
+            left: 80px;
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: var(--charcoal);
+            letter-spacing: 2px;
+        }
+
+        .form-content {
+            max-width: 400px;
+            animation: slideIn 1s forwards;
+        }
+
+        .input-box {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px 0;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-bottom-color: var(--charcoal);
+        }
+
+        label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #AAA;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .submit-btn {
+            background: var(--charcoal);
+            color: white;
+            padding: 20px 40px;
+            border: none;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: var(--transition);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .submit-btn:hover {
+            background: var(--dusty-rose);
+            transform: translateY(-5px);
+        }
+
+        /* --- Stunning Success Overlay --- */
+        .success-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--charcoal);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 100;
+            clip-path: circle(0% at 50% 50%);
+            transition: clip-path 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .success-screen.active {
+            clip-path: circle(150% at 50% 50%);
+        }
+
+        .success-screen h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 5rem;
+            margin-bottom: 20px;
+            opacity: 0;
+        }
+
+        .success-screen.active h1 {
+            animation: fadeIn 1s forwards 0.8s;
+        }
+
+        /* --- Return Link Styling --- */
+        .return-link {
+            color: white; 
+            margin-top: 50px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            font-size: 0.7rem;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 5px;
+            transition: 0.3s;
+        }
+
+        .return-link:hover {
+            color: var(--dusty-rose);
+            border-bottom-color: var(--dusty-rose);
+            letter-spacing: 4px;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 1000px) {
+            .order-wrapper { flex-direction: column; overflow-y: auto; }
+            .visual-side { height: 40vh; }
+            .form-side { width: 100%; padding: 40px; }
+            body { overflow: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="home.html" class="logo-top">BAKESY.</a>
+
+    <div class="order-wrapper">
+        <div class="visual-side">
+            <img id="productImage" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=1200" alt="Bakery">
+            <div class="visual-overlay">
+                <p style="text-transform: uppercase; letter-spacing: 5px; font-size: 0.8rem; margin-bottom: 10px;">Collection 2026</p>
+                <h2 id="productTitle">Selection.</h2>
+            </div>
+        </div>
+
+        <div class="form-side">
+            <div class="form-content">
+                <form id="luxForm" onsubmit="confirmOrder(event)">
+                    <div class="input-box">
+                        <label>The Confection</label>
+                        <select id="selection" onchange="changeVisual()" required>
+                            <option value="" disabled selected>Select from our vault...</option>
+                            <option value="Lavender Cake" data-img="https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=1200">Lavender Earl Grey Cake</option>
+                            <option value="Artisan Truffles" data-img="https://images.unsplash.com/photo-1548907040-4baa42d10919?w=1200">Artisan Cacao Truffles</option>
+                            <option value="Berry Gateau" data-img="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=1200">Wild Berry Gateau</option>
+                        </select>
+                    </div>
+
+                    <div class="input-box">
+                        <label>Your Name</label>
+                        <input type="text" placeholder="Name" required>
+                    </div>
+
+                    <div class="input-box">
+                        <label>Contact Details</label>
+                        <input type="email" placeholder="Email Address" required>
+                    </div>
+
+                    <div class="input-box">
+                        <label>Quantity</label>
+                        <input type="number" value="1" min="1">
+                    </div>
+
+                    <button type="submit" class="submit-btn">Complete Reservation</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="success-screen" id="success">
+        <h1>Confirmed.</h1>
+        <p style="letter-spacing: 3px; text-transform: uppercase; font-size: 0.8rem;">We are preparing your moments.</p>
+        <a href="home.html" class="return-link">Return to Gallery</a>
+    </div>
+
+    <script>
+        function changeVisual() {
+            const select = document.getElementById('selection');
+            const img = select.options[select.selectedIndex].getAttribute('data-img');
+            const title = select.value;
+            
+            const displayImg = document.getElementById('productImage');
+            const displayTitle = document.getElementById('productTitle');
+
+            displayImg.style.opacity = '0';
+            setTimeout(() => {
+                displayImg.src = img;
+                displayTitle.innerText = title + ".";
+                displayImg.style.opacity = '1';
+            }, 400);
+        }
+
+        function confirmOrder(e) {
+            e.preventDefault();
+            document.getElementById('success').classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
