@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Collection | Bakesy</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FCF9F6;
+            --dusty-rose: #E2B4BD;
+            --charcoal: #2D2D2D;
+            --white: #FFFFFF;
+            --soft-gray: #F4F4F4;
+            --transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        /* --- Nav --- */
+        nav {
+            padding: 30px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.8rem;
+            text-decoration: none;
+            color: var(--charcoal);
+            letter-spacing: 1px;
+        }
+
+        /* --- Header --- */
+        .page-header {
+            text-align: center;
+            padding: 100px 20px 60px;
+        }
+
+        .page-header h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+
+        .category-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--dusty-rose);
+            font-weight: 600;
+        }
+
+        /* --- Product Grid --- */
+        .product-grid {
+            max-width: 1300px;
+            margin: 0 auto 100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 60px 30px;
+            padding: 0 40px;
+        }
+
+        .product-card {
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s forwards;
+        }
+
+        /* Staggered animation for 12 items */
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        .product-card:nth-child(5) { animation-delay: 0.5s; }
+        .product-card:nth-child(6) { animation-delay: 0.6s; }
+        .product-card:nth-child(n+7) { animation-delay: 0.7s; }
+
+        .img-container {
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            background: var(--soft-gray);
+            margin-bottom: 20px;
+            border-radius: 2px;
+        }
+
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .product-card:hover img { transform: scale(1.06); }
+
+        .product-info h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.3rem;
+            font-weight: 400;
+            margin-bottom: 5px;
+        }
+
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price { color: var(--dusty-rose); font-weight: 600; font-size: 0.9rem; }
+
+        /* --- Modal --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            display: flex;
+            align-items: center; justify-content: center;
+            z-index: 1000; opacity: 0; visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal-content {
+            max-width: 1000px; width: 90%;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 50px; transform: translateY(20px);
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+
+        .modal-text h2 { font-family: 'DM Serif Display', serif; font-size: 3rem; margin-bottom: 20px; }
+        .modal-desc { font-size: 1.1rem; color: #666; margin-bottom: 30px; }
+        .close-btn { position: absolute; top: 40px; right: 40px; cursor: pointer; letter-spacing: 2px; font-size: 0.7rem; text-transform: uppercase; border-bottom: 1px solid var(--charcoal); }
+
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .modal-content { grid-template-columns: 1fr; text-align: center; }
+            .product-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="home.html" class="logo">Bakesy.</a>
+    </nav>
+
+    <header class="page-header">
+        <span class="category-label">Curated Selection</span>
+        <h1>Pastries & Confections</h1>
+    </header>
+
+    <main class="product-grid" id="productGrid">
+        </main>
+
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal()">Close</span>
+            <div class="modal-img"><img id="mImg" src="" style="width: 100%; border-radius: 2px;"></div>
+            <div class="modal-text">
+                <h2 id="mTitle"></h2>
+                <p id="mDesc" class="modal-desc"></p>
+                <p id="mPrice" class="price" style="font-size: 1.5rem;"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            { t: "Lavender Earl Grey Cake", p: "$55.00", d: "Infused with organic bergamot tea and culinary lavender spirits.", i: "https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=600" },
+            { t: "Pistachio Baklava Croissant", p: "$8.50", d: "Twice-baked croissant filled with honey-soaked pistachios.", i: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600" },
+            { t: "Dark Cacao Truffles", p: "$32.00", d: "Hand-rolled 80% Tanzanian chocolate with gold leaf finish.", i: "https://images.unsplash.com/photo-1548907040-4baa42d10919?w=600" },
+            { t: "Wild Berry Gateau", p: "$48.00", d: "Seasonal forest berries layered with whipped mascarpone.", i: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600" },
+            { t: "Almond Praline Bar", p: "$12.00", d: "Velvety milk chocolate with roasted Valencia almonds.", i: "https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600" },
+            { t: "Saffron Spiced Bun", p: "$6.50", d: "Swedish style cardamon bun with a modern saffron twist.", i: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600" },
+            { t: "Matcha Opera Cake", p: "$60.00", d: "Six layers of almond sponge, matcha ganache, and coffee buttercream.", i: "https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=600" },
+            { t: "Sea Salt Fudge Brownie", p: "$5.00", d: "Ultra-dense fudge brownie topped with Maldon sea salt.", i: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600" },
+            { t: "Lemon Meringue Tart", p: "$14.00", d: "Zesty Sicilian lemon curd with toasted Italian meringue.", i: "https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=600" },
+            { t: "Ruby Chocolate Hearts", p: "$24.00", d: "Naturally pink chocolate with a tart raspberry center.", i: "https://images.unsplash.com/photo-1511381939415-e44015466834?w=600" },
+            { t: "Honey Caramel Macarons", p: "$18.00", d: "A box of six hand-painted local wildflower honey macarons.", i: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600" }
+        ];
+
+        const grid = document.getElementById('productGrid');
+        products.forEach(prod => {
+            grid.innerHTML += `
+                <div class="product-card" onclick="openModal('${prod.t}', '${prod.d}', '${prod.p}', '${prod.i}')">
+                    <div class="img-container"><img src="${prod.i}" alt="${prod.t}"></div>
+                    <div class="product-info">
+                        <h3>${prod.t}</h3>
+                        <div class="product-details"><span class="price">${prod.p}</span></div>
+                    </div>
+                </div>`;
+        });
+
+        function openModal(t, d, p, i) {
+            document.getElementById('mTitle').innerText = t;
+            document.getElementById('mDesc').innerText = d;
+            document.getElementById('mPrice').innerText = p;
+            document.getElementById('mImg').src = i;
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
+    </script>
+</body>
+</html>
