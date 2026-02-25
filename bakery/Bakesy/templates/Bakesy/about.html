@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Heritage | Bakesy</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FAF7F2;
+            --dusty-rose: #E2B4BD;
+            --charcoal: #1A1A1A;
+            --white: #FFFFFF;
+            --transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.8rem;
+            text-decoration: none;
+            color: var(--charcoal);
+            letter-spacing: 2px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-left: 30px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--dusty-rose); }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 100px 60px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero p {
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 0.8rem;
+            color: var(--dusty-rose);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            line-height: 1.1;
+            font-weight: 400;
+        }
+
+        /* --- Story Section --- */
+        .story-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            padding: 100px 60px;
+            align-items: center;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .story-image img {
+            width: 100%;
+            height: auto;
+            filter: sepia(20%);
+        }
+
+        .story-content h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        /* --- Trust Grid --- */
+        .trust-grid {
+            background: var(--white);
+            padding: 100px 60px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+
+        .trust-item {
+            padding: 20px;
+        }
+
+        .trust-item h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .trust-item p {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* --- Meet the Team --- */
+        .team-section {
+            padding: 120px 60px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .team-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .member-card img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .member-card:hover img {
+            transform: scale(1.02);
+        }
+
+        .member-card h4 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.4rem;
+        }
+
+        .member-card span {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--dusty-rose);
+        }
+
+        /* --- Footer CTA --- */
+        .footer-cta {
+            background: var(--charcoal);
+            color: var(--white);
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .footer-cta h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .cta-link {
+            color: var(--white);
+            text-decoration: none;
+            border-bottom: 1px solid var(--dusty-rose);
+            padding-bottom: 5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+
+        .cta-link:hover { color: var(--dusty-rose); }
+
+        @media (max-width: 850px) {
+            .story-section, .trust-grid { grid-template-columns: 1fr; }
+            nav { flex-direction: column; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="home.html" class="logo">BAKESY.</a>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="products.html">Collection</a>
+            <a href="order.html">Order</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <p>Our Philosophy</p>
+        <h1>Crafting moments, one slow-risen crumb at a time.</h1>
+    </header>
+
+    <section class="story-section">
+        <div class="story-image">
+            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200" alt="Baking Craft">
+        </div>
+        <div class="story-content">
+            <h2>Our Story</h2>
+            <p>Founded in 2026, Bakesy began as a small experimental kitchen dedicated to the forgotten art of long-fermentation baking. We believe that modern speed is the enemy of flavor.</p>
+            <p>That’s why our kitchen never sleeps; we work with the rhythms of nature, allowing our sourdoughs to rest for 48 hours and our chocolates to be tempered in small, precise batches.</p>
+        </div>
+    </section>
+
+    <section class="trust-grid">
+        <div class="trust-item">
+            <h3>Pure Origins</h3>
+            <p>"We exclusively source AOP-certified French butter and single-origin cacao, ensuring every bite meets the highest global standards of purity."</p>
+        </div>
+        <div class="trust-item">
+            <h3>Artisanal Integrity</h3>
+            <p>"Every pastry at Bakesy is hand-laminated and inspected by a master patissier—never a machine, never a shortcut."</p>
+        </div>
+        <div class="trust-item">
+            <h3>Community Faith</h3>
+            <p>"Trusted by over 10,000 connoisseurs who value the difference between a simple bake and a culinary masterpiece."</p>
+        </div>
+    </section>
+
+    <section class="team-section">
+        <div class="team-header">
+            <h2 style="font-family: 'DM Serif Display'; font-size: 3rem;">The Artisans</h2>
+        </div>
+        <div class="team-grid">
+            <div class="member-card">
+                <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=600" alt="Chef">
+                <h4>Chef Julian</h4>
+                <span>Founder & Master Baker</span>
+            </div>
+            <div class="member-card">
+                <img src="https://images.unsplash.com/photo-1581299894007-aaa50297cf16?q=80&w=600" alt="Chef">
+                <h4>Sophie Vane</h4>
+                <span>Creative Pastry Lead</span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer-cta">
+        <h2>Ready to taste the tradition?</h2>
+        <a href="products.html" class="cta-link">Explore the collection</a>
+    </footer>
+
+</body>
+</html>
