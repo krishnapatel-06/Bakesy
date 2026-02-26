@@ -13,3 +13,5 @@ def about(request):
     return render(request,'Bakesy/about.html')
 def location(request):
     return render(request,'Bakesy/location.html')
+def error(request):
+    return render(request,'Bakesy/error.html')

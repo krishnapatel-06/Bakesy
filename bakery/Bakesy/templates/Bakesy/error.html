@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | Crumb Not Found</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FCF9F6;
+            --dusty-rose: #E2B4BD;
+            --charcoal: #2D2D2D;
+            --white: #FFFFFF;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cream);
+            color: var(--charcoal);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .error-container {
+            max-width: 600px;
+            padding: 40px;
+        }
+
+        .error-code {
+            font-family: 'DM Serif Display', serif;
+            font-size: 8rem;
+            color: var(--dusty-rose);
+            line-height: 1;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            opacity: 0.8;
+            letter-spacing: 0.5px;
+        }
+
+        .internet-note {
+            font-size: 0.95rem;
+            margin-bottom: 40px;
+            opacity: 0.7;
+            font-style: italic;
+        }
+
+        .back-home {
+            display: inline-block;
+            padding: 18px 40px;
+            border: 1px solid var(--charcoal);
+            text-decoration: none;
+            color: var(--charcoal);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            transition: all 0.4s ease;
+        }
+
+        .back-home:hover {
+            background: var(--charcoal);
+            color: var(--white);
+        }
+
+        .crumbs {
+            margin-top: 30px;
+            font-size: 1.5rem;
+            letter-spacing: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="error-container">
+        <div class="error-code">404</div>
+        <h1>That page has crumbled.</h1>
+        <p>It looks like the treat you were looking for isn't in our oven today.</p>
+        
+        <div class="internet-note">
+            If you’ve lost your internet connection, please check your Wi-Fi or mobile data and try refreshing the page.
+        </div>
+        
+        <a href="{% url 'home' %}" class="back-home">Back to Bakery</a>
+
+        <div class="crumbs">. . . .</div>
+    </div>
+
+</body>
+</html>

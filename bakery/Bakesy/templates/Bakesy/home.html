@@ -29,7 +29,7 @@
             overflow-x: hidden;
         }
 
-        /* --- Navigation --- */
+        /* --- Updated Navigation --- */
         nav {
             padding: 40px;
             display: flex;
@@ -48,6 +48,38 @@
             text-transform: uppercase;
             color: var(--charcoal);
             text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--dusty-rose);
+        }
+
+        /* Special style for the Order button */
+        .order-btn-nav {
+            border: 1px solid var(--charcoal);
+            padding: 8px 20px;
+            border-radius: 50px;
+        }
+
+        .order-btn-nav:hover {
+            background-color: var(--charcoal);
+            color: var(--white) !important;
         }
 
         /* --- Hero Section --- */
@@ -101,7 +133,6 @@
             border-radius: 4px;
         }
 
-        /* Alternating sizes for a "Gallery" feel */
         .item:nth-child(odd) { grid-column: span 7; }
         .item:nth-child(even) { grid-column: span 5; margin-top: 50px; }
 
@@ -149,6 +180,28 @@
             border-top: 1px solid rgba(0,0,0,0.05);
         }
 
+        .footer-links {
+            margin: 20px 0 40px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--dusty-rose);
+        }
+
         .cta-btn {
             display: inline-block;
             padding: 18px 40px;
@@ -175,6 +228,14 @@
         }
 
         @media (max-width: 768px) {
+            nav {
+                padding: 20px;
+                flex-direction: column;
+                gap: 20px;
+            }
+            .nav-links {
+                gap: 15px;
+            }
             .item, .item:nth-child(odd), .item:nth-child(even) {
                 grid-column: span 12;
                 margin-top: 0;
@@ -185,8 +246,17 @@
 <body>
     
     <nav>
-        <a href="#" class="logo">Bakesy.</a>
-        <div style="font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;">Est. 2026</div>
+        <a href="home.html" class="logo">Bakesy.</a>
+        
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="product.html">Products</a>
+            <a href="location.html">Location</a>
+            <a href="order.html" class="order-btn-nav">Order Now</a>
+        </div>
+
+        <div style="font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.5;">Est. 2026</div>
     </nav>
 
     <section class="hero">
@@ -239,8 +309,8 @@
     </main>
 
     <footer>
-        <h2 style="font-family: 'DM Serif Display'; font-size: 2.5rem; margin-bottom: 30px;">Taste the passion.</h2>
-        <a href="#" class="cta-btn">Order for Collection</a>
+        <h2 style="font-family: 'DM Serif Display'; font-size: 2.5rem;">Taste the passion.</h2>
+        <a href="order.html" class="cta-btn">Order for Collection</a>
     </footer>
 
 </body>
