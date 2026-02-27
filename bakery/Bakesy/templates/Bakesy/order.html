@@ -1,291 +1,296 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bakesy | The Order Experience</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --cream: #FAF7F2;
-            --dusty-rose: #E2B4BD;
-            --charcoal: #1A1A1A;
-            --white: #FFFFFF;
-            --transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-        }
+{% extends "Bakesy/base.html" %}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+{% block title %}Bakesy | The Order Experience{% endblock %}
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--cream);
-            color: var(--charcoal);
-            overflow: hidden; 
-        }
+{% block extra_styles %}
+<style>
+    /* ===================== LAYOUT OVERRIDES ===================== */
+    body { overflow: hidden; }
 
-        /* --- Split Screen Layout --- */
-        .order-wrapper {
-            display: flex;
-            height: 100vh;
-            width: 100vw;
-        }
+    /* Hide the shared nav — order page has its own logo link */
+    nav { display: none; }
 
-        /* --- Left Side: Visuals --- */
-        .visual-side {
-            flex: 1;
-            position: relative;
-            overflow: hidden;
-            background: #E8E2D9;
-        }
+    /* ===================== SPLIT SCREEN ===================== */
+    .order-wrapper {
+        display: flex;
+        height: 100vh;
+        width: 100vw;
+    }
 
-        .visual-side img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-            filter: brightness(0.9);
-        }
+    /* ---- Left: Visual ---- */
+    .visual-side {
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+        background: #E8E2D9;
+    }
 
-        .visual-overlay {
-            position: absolute;
-            bottom: 60px;
-            left: 60px;
-            color: var(--white);
-            z-index: 2;
-        }
+    .visual-side img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.4s ease;
+        filter: brightness(0.9);
+    }
 
-        .visual-overlay h2 {
-            font-family: 'DM Serif Display', serif;
-            font-size: 4rem;
-            line-height: 1;
-        }
+    .visual-overlay {
+        position: absolute;
+        bottom: 60px;
+        left: 60px;
+        color: var(--white);
+        z-index: 2;
+    }
 
-        /* --- Right Side: Form --- */
-        .form-side {
-            width: 40%;
-            padding: 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: var(--white);
-            position: relative;
-        }
+    .visual-overlay p {
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+    }
 
-        .logo-top {
-            position: absolute;
-            top: 40px;
-            left: 80px;
-            font-family: 'DM Serif Display', serif;
-            font-size: 1.5rem;
-            text-decoration: none;
-            color: var(--charcoal);
-            letter-spacing: 2px;
-        }
+    .visual-overlay h2 {
+        font-family: 'DM Serif Display', serif;
+        font-size: 4rem;
+        line-height: 1;
+    }
 
-        .form-content {
-            max-width: 400px;
-            animation: slideIn 1s forwards;
-        }
+    /* ---- Right: Form ---- */
+    .form-side {
+        width: 40%;
+        padding: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: var(--white);
+        position: relative;
+        overflow-y: auto;
+    }
 
-        .input-box {
-            margin-bottom: 30px;
-            position: relative;
-        }
+    .logo-top {
+        position: absolute;
+        top: 40px;
+        left: 80px;
+        font-family: 'DM Serif Display', serif;
+        font-size: 1.5rem;
+        text-decoration: none;
+        color: var(--charcoal);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
 
-        input, select {
-            width: 100%;
-            padding: 15px 0;
-            border: none;
-            border-bottom: 1px solid #ddd;
-            background: transparent;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
+    .form-content {
+        max-width: 400px;
+        animation: slideIn 1s forwards;
+    }
 
-        input:focus, select:focus {
-            outline: none;
-            border-bottom-color: var(--charcoal);
-        }
+    .input-box {
+        margin-bottom: 30px;
+        position: relative;
+    }
 
-        label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #AAA;
-            display: block;
-            margin-bottom: 10px;
-        }
+    label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: #AAA;
+        display: block;
+        margin-bottom: 10px;
+    }
 
-        .submit-btn {
-            background: var(--charcoal);
-            color: white;
-            padding: 20px 40px;
-            border: none;
-            width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: var(--transition);
-            overflow: hidden;
-            position: relative;
-        }
+    input, select {
+        width: 100%;
+        padding: 15px 0;
+        border: none;
+        border-bottom: 1px solid #ddd;
+        background: transparent;
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+    }
 
-        .submit-btn:hover {
-            background: var(--dusty-rose);
-            transform: translateY(-5px);
-        }
+    input:focus, select:focus {
+        outline: none;
+        border-bottom-color: var(--charcoal);
+    }
 
-        /* --- Stunning Success Overlay --- */
-        .success-screen {
-            position: fixed;
-            inset: 0;
-            background: var(--charcoal);
-            color: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            z-index: 100;
-            clip-path: circle(0% at 50% 50%);
-            transition: clip-path 1.2s cubic-bezier(0.77, 0, 0.175, 1);
-        }
+    .submit-btn {
+        background: var(--charcoal);
+        color: var(--white);
+        padding: 20px 40px;
+        border: none;
+        width: 100%;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: var(--transition);
+    }
 
-        .success-screen.active {
-            clip-path: circle(150% at 50% 50%);
-        }
+    .submit-btn:hover {
+        background: var(--dusty-rose);
+        transform: translateY(-5px);
+    }
 
-        .success-screen h1 {
-            font-family: 'DM Serif Display', serif;
-            font-size: 5rem;
-            margin-bottom: 20px;
-            opacity: 0;
-        }
+    /* ===================== SUCCESS OVERLAY ===================== */
+    .success-screen {
+        position: fixed;
+        inset: 0;
+        background: var(--charcoal);
+        color: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        z-index: 100;
+        clip-path: circle(0% at 50% 50%);
+        transition: clip-path 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        text-align: center;
+    }
 
-        .success-screen.active h1 {
-            animation: fadeIn 1s forwards 0.8s;
-        }
+    .success-screen.active { clip-path: circle(150% at 50% 50%); }
 
-        /* --- Return Link Styling --- */
-        .return-link {
-            color: white; 
-            margin-top: 50px; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            font-size: 0.7rem;
-            text-decoration: none;
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-            padding-bottom: 5px;
-            transition: 0.3s;
-        }
+    .success-screen h1 {
+        font-family: 'DM Serif Display', serif;
+        font-size: 5rem;
+        margin-bottom: 20px;
+        opacity: 0;
+    }
 
-        .return-link:hover {
-            color: var(--dusty-rose);
-            border-bottom-color: var(--dusty-rose);
-            letter-spacing: 4px;
-        }
+    .success-screen.active h1 { animation: fadeIn 1s forwards 0.8s; }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(30px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
+    .success-screen p {
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    .return-link {
+        color: var(--white);
+        margin-top: 50px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.7rem;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(255,255,255,0.3);
+        padding-bottom: 5px;
+        transition: 0.3s;
+    }
 
-        @media (max-width: 1000px) {
-            .order-wrapper { flex-direction: column; overflow-y: auto; }
-            .visual-side { height: 40vh; }
-            .form-side { width: 100%; padding: 40px; }
-            body { overflow: auto; }
-        }
-    </style>
-</head>
-<body>
+    .return-link:hover {
+        color: var(--dusty-rose);
+        border-bottom-color: var(--dusty-rose);
+        letter-spacing: 4px;
+    }
 
-    <a href="home.html" class="logo-top">BAKESY.</a>
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateX(30px); }
+        to   { opacity: 1; transform: translateX(0); }
+    }
 
-    <div class="order-wrapper">
-        <div class="visual-side">
-            <img id="productImage" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=1200" alt="Bakery">
-            <div class="visual-overlay">
-                <p style="text-transform: uppercase; letter-spacing: 5px; font-size: 0.8rem; margin-bottom: 10px;">Collection 2026</p>
-                <h2 id="productTitle">Selection.</h2>
-            </div>
-        </div>
+    @media (max-width: 1000px) {
+        body { overflow: auto; }
+        .order-wrapper { flex-direction: column; height: auto; }
+        .visual-side { height: 40vh; }
+        .form-side { width: 100%; padding: 40px; }
+        .logo-top { left: 40px; }
+    }
+</style>
+{% endblock %}
 
-        <div class="form-side">
-            <div class="form-content">
-                <form id="luxForm" onsubmit="confirmOrder(event)">
-                    <div class="input-box">
-                        <label>The Confection</label>
-                        <select id="selection" onchange="changeVisual()" required>
-                            <option value="" disabled selected>Select from our vault...</option>
-                            <option value="Lavender Cake" data-img="https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=1200">Lavender Earl Grey Cake</option>
-                            <option value="Artisan Truffles" data-img="https://images.unsplash.com/photo-1548907040-4baa42d10919?w=1200">Artisan Cacao Truffles</option>
-                            <option value="Berry Gateau" data-img="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=1200">Wild Berry Gateau</option>
-                            <option value="Pistachio Croissant" data-img="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=1200">Pistachio Baklava Croissant</option>
-                            <option value="Matcha Opera" data-img="https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=1200">Matcha Opera Cake</option>
-                            <option value="Lemon Meringue" data-img="https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=1200">Sicilian Lemon Meringue Tart</option>
-                            <option value="Honey Macarons" data-img="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=1200">Wildflower Honey Macarons</option>
-                            <option value="Saffron Bun" data-img="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1200">Saffron Spiced Cardamom Bun</option>
-                            <option value="Ruby Hearts" data-img="https://images.unsplash.com/photo-1511381939415-e44015466834?w=1200">Ruby Chocolate Hearts</option>
-                        </select>
-                    </div>
+{% block content %}
 
-                    <div class="input-box">
-                        <label>Your Name</label>
-                        <input type="text" placeholder="Name" required>
-                    </div>
+<!-- Custom logo since nav is hidden on this page -->
+<a href="{% url 'home' %}" class="logo-top">BAKESY.</a>
 
-                    <div class="input-box">
-                        <label>Contact Details</label>
-                        <input type="email" placeholder="Email Address" required>
-                    </div>
+<div class="order-wrapper">
 
-                    <div class="input-box">
-                        <label>Quantity</label>
-                        <input type="number" value="1" min="1">
-                    </div>
-
-                    <button type="submit" class="submit-btn">Complete Reservation</button>
-                </form>
-            </div>
+    <!-- Visual Side -->
+    <div class="visual-side">
+        <img id="productImage"
+             src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=1200"
+             alt="Bakery selection">
+        <div class="visual-overlay">
+            <p>Collection 2026</p>
+            <h2 id="productTitle">Selection.</h2>
         </div>
     </div>
 
-    <div class="success-screen" id="success">
-        <h1>Confirmed.</h1>
-        <p style="letter-spacing: 3px; text-transform: uppercase; font-size: 0.8rem;">We are preparing your moments.</p>
-        <a href="{% url 'home' %}" class="return-link">Return to Gallery</a>
+    <!-- Form Side -->
+    <div class="form-side">
+        <div class="form-content">
+            <form id="luxForm" onsubmit="confirmOrder(event)">
+
+                <div class="input-box">
+                    <label>The Confection</label>
+                    <select id="selection" onchange="changeVisual()" required>
+                        <option value="" disabled selected>Select from our vault...</option>
+                        <option value="Lavender Cake"      data-img="https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=1200">Lavender Earl Grey Cake</option>
+                        <option value="Artisan Truffles"   data-img="https://images.unsplash.com/photo-1548907040-4baa42d10919?w=1200">Artisan Cacao Truffles</option>
+                        <option value="Berry Gateau"       data-img="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=1200">Wild Berry Gateau</option>
+                        <option value="Pistachio Croissant"data-img="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=1200">Pistachio Baklava Croissant</option>
+                        <option value="Matcha Opera"       data-img="https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=1200">Matcha Opera Cake</option>
+                        <option value="Lemon Meringue"     data-img="https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=1200">Sicilian Lemon Meringue Tart</option>
+                        <option value="Honey Macarons"     data-img="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=1200">Wildflower Honey Macarons</option>
+                        <option value="Saffron Bun"        data-img="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1200">Saffron Spiced Cardamom Bun</option>
+                        <option value="Ruby Hearts"        data-img="https://images.unsplash.com/photo-1511381939415-e44015466834?w=1200">Ruby Chocolate Hearts</option>
+                    </select>
+                </div>
+
+                <div class="input-box">
+                    <label>Your Name</label>
+                    <input type="text" name="name" placeholder="Name" required>
+                </div>
+
+                <div class="input-box">
+                    <label>Contact Details</label>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+
+                <div class="input-box">
+                    <label>Quantity</label>
+                    <input type="number" name="quantity" value="1" min="1">
+                </div>
+
+                {% csrf_token %}
+                <button type="submit" class="submit-btn">Complete Reservation</button>
+            </form>
+        </div>
     </div>
+</div>
 
-    <script>
-        function changeVisual() {
-            const select = document.getElementById('selection');
-            const img = select.options[select.selectedIndex].getAttribute('data-img');
-            const title = select.value;
-            
-            const displayImg = document.getElementById('productImage');
-            const displayTitle = document.getElementById('productTitle');
+<!-- Success Overlay -->
+<div class="success-screen" id="success">
+    <h1>Confirmed.</h1>
+    <p>We are preparing your moments.</p>
+    <a href="{% url 'home' %}" class="return-link">Return to Gallery</a>
+</div>
 
-            displayImg.style.opacity = '0';
-            setTimeout(() => {
-                displayImg.src = img;
-                displayTitle.innerText = title + ".";
-                displayImg.style.opacity = '1';
-            }, 400);
-        }
+{% endblock %}
 
-        function confirmOrder(e) {
-            e.preventDefault();
-            document.getElementById('success').classList.add('active');
-        }
-    </script>
+{% block extra_scripts %}
+<script>
+    function changeVisual() {
+        const select   = document.getElementById('selection');
+        const selected = select.options[select.selectedIndex];
+        const img      = selected.getAttribute('data-img');
+        const title    = selected.value;
 
-</body>
-</html>
+        const displayImg   = document.getElementById('productImage');
+        const displayTitle = document.getElementById('productTitle');
+
+        displayImg.style.opacity = '0';
+        setTimeout(() => {
+            displayImg.src    = img;
+            displayImg.alt    = title;
+            displayTitle.innerText = title + '.';
+            displayImg.style.opacity = '1';
+        }, 400);
+    }
+
+    function confirmOrder(e) {
+        e.preventDefault();
+        document.getElementById('success').classList.add('active');
+    }
+</script>
+{% endblock %}

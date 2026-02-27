@@ -1,317 +1,180 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bakesy | Artisan Bakery</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --cream: #FCF9F6;
-            --dusty-rose: #E2B4BD;
-            --sage: #9EB7A7;
-            --charcoal: #2D2D2D;
-            --white: #FFFFFF;
-            --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+{% extends "Bakesy/base.html" %}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+{% block title %}Bakesy | Artisan Bakery{% endblock %}
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--cream);
-            color: var(--charcoal);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+{% block nav_class %}class="transparent"{% endblock %}
 
-        /* --- Updated Navigation --- */
-        nav {
-            padding: 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: transparent;
-            position: absolute;
-            width: 100%;
-            z-index: 10;
-        }
+{% block extra_styles %}
+<style>
+    /* ===================== HERO ===================== */
+    .hero {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 20px;
+    }
 
-        .logo {
-            font-family: 'DM Serif Display', serif;
-            font-size: 1.8rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--charcoal);
-            text-decoration: none;
-        }
+    .hero-content {
+        max-width: 800px;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeIn 1.2s forwards 0.2s;
+    }
 
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
+    .hero h1 {
+        font-family: 'DM Serif Display', serif;
+        font-size: clamp(3rem, 8vw, 5.5rem);
+        line-height: 1.1;
+        margin-bottom: 20px;
+        font-weight: 400;
+    }
 
-        .nav-links a {
-            text-decoration: none;
-            color: var(--charcoal);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-            transition: var(--transition);
-        }
+    .hero p {
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--dusty-rose);
+        font-weight: 600;
+        margin-bottom: 30px;
+    }
 
-        .nav-links a:hover {
-            color: var(--dusty-rose);
-        }
+    /* ===================== PRODUCT GRID ===================== */
+    .grid-container {
+        max-width: 1300px;
+        margin: 0 auto 100px;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 40px;
+        padding: 20px;
+    }
 
-        /* Special style for the Order button */
-        .order-btn-nav {
-            border: 1px solid var(--charcoal);
-            padding: 8px 20px;
-            border-radius: 50px;
-        }
+    .item {
+        grid-column: span 6;
+        position: relative;
+        overflow: hidden;
+        border-radius: 4px;
+    }
 
-        .order-btn-nav:hover {
-            background-color: var(--charcoal);
-            color: var(--white) !important;
-        }
+    .item:nth-child(odd)  { grid-column: span 7; }
+    .item:nth-child(even) { grid-column: span 5; margin-top: 50px; }
 
-        /* --- Hero Section --- */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0 20px;
-        }
+    .image-wrapper {
+        overflow: hidden;
+        background: #eee;
+        aspect-ratio: 4/5;
+        border-radius: 4px;
+    }
 
-        .hero-content {
-            max-width: 800px;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeIn 1.2s forwards 0.2s;
-        }
+    .item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+        filter: grayscale(20%);
+    }
 
-        h1 {
-            font-family: 'DM Serif Display', serif;
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            line-height: 1.1;
-            margin-bottom: 20px;
-            font-weight: 400;
-        }
+    .item:hover img {
+        transform: scale(1.05);
+        filter: grayscale(0%);
+    }
 
-        .hero p {
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--dusty-rose);
-            font-weight: 600;
-            margin-bottom: 30px;
-        }
+    .item-info { margin-top: 20px; }
 
-        /* --- Grid Section --- */
-        .grid-container {
-            max-width: 1300px;
-            margin: 0 auto 100px;
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 40px;
-            padding: 20px;
-        }
+    .item-info h3 {
+        font-family: 'DM Serif Display', serif;
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+    }
 
-        .item {
-            grid-column: span 6;
-            position: relative;
-            overflow: hidden;
-            border-radius: 4px;
-        }
+    .item-info span {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--dusty-rose);
+    }
 
-        .item:nth-child(odd) { grid-column: span 7; }
-        .item:nth-child(even) { grid-column: span 5; margin-top: 50px; }
+    /* ===================== FOOTER ===================== */
+    footer {
+        padding: 100px 20px;
+        text-align: center;
+        border-top: 1px solid rgba(0,0,0,0.05);
+    }
 
-        .image-wrapper {
-            overflow: hidden;
-            background: #eee;
-            aspect-ratio: 4/5;
-            border-radius: 4px;
-        }
+    footer h2 {
+        font-family: 'DM Serif Display', serif;
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+    }
 
-        .item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-            filter: grayscale(20%);
+    @media (max-width: 768px) {
+        .item,
+        .item:nth-child(odd),
+        .item:nth-child(even) {
+            grid-column: span 12;
+            margin-top: 0;
         }
+    }
+</style>
+{% endblock %}
 
-        .item:hover img {
-            transform: scale(1.05);
-            filter: grayscale(0%);
-        }
+{% block nav_right %}Est. 2026{% endblock %}
 
-        .item-info {
-            margin-top: 20px;
-        }
+{% block content %}
 
-        .item-info h3 {
-            font-family: 'DM Serif Display', serif;
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
+<section class="hero">
+    <div class="hero-content">
+        <p>Artisan Flour &amp; Sugar</p>
+        <h1>Beautifully crafted,<br>intentionally baked.</h1>
+    </div>
+</section>
 
-        .item-info span {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--dusty-rose);
-        }
-
-        /* --- Footer --- */
-        footer {
-            padding: 100px 20px;
-            text-align: center;
-            border-top: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .footer-links {
-            margin: 20px 0 40px;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-        }
-
-        .footer-links a {
-            text-decoration: none;
-            color: var(--charcoal);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.7;
-            transition: 0.3s;
-        }
-
-        .footer-links a:hover {
-            opacity: 1;
-            color: var(--dusty-rose);
-        }
-
-        .cta-btn {
-            display: inline-block;
-            padding: 18px 40px;
-            border: 1px solid var(--charcoal);
-            text-decoration: none;
-            color: var(--charcoal);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            transition: var(--transition);
-        }
-
-        .cta-btn:hover {
-            background: var(--charcoal);
-            color: var(--white);
-        }
-
-        /* --- Animations --- */
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            nav {
-                padding: 20px;
-                flex-direction: column;
-                gap: 20px;
-            }
-            .nav-links {
-                gap: 15px;
-            }
-            .item, .item:nth-child(odd), .item:nth-child(even) {
-                grid-column: span 12;
-                margin-top: 0;
-            }
-        }
-    </style>
-</head>
-<body>
-    
-    <nav>
-        <a href="home.html" class="logo">Bakesy.</a>
-        
-        <div class="nav-links">
-            <a href="/home/">Home</a>
-            <a href="/about/">About</a>
-            <a href="/products/">Products</a>
-            <a href="/location/">Location</a>
-            <a href="/order/" class="order-btn-nav">Order Now</a>
+<main class="grid-container">
+    <div class="item">
+        <div class="image-wrapper">
+            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80" alt="Sourdough">
         </div>
-
-        <div style="font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.5;">Est. 2026</div>
-    </nav>
-
-    <section class="hero">
-        <div class="hero-content">
-            <p>Artisan Flour & Sugar</p>
-            <h1>Beautifully crafted, <br>intentionally baked.</h1>
+        <div class="item-info">
+            <span>01. Morning</span>
+            <h3>Hand-Laminated Pastries</h3>
         </div>
-    </section>
+    </div>
 
-    <main class="grid-container">
-        <div class="item">
-            <div class="image-wrapper">
-                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80" alt="Sourdough">
-            </div>
-            <div class="item-info">
-                <span>01. Morning</span>
-                <h3>Hand-Laminated Pastries</h3>
-            </div>
+    <div class="item">
+        <div class="image-wrapper">
+            <img src="https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=800&q=80" alt="Minimalist Cake">
         </div>
-
-        <div class="item">
-            <div class="image-wrapper">
-                <img src="https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=800&q=80" alt="Minimalist Cake">
-            </div>
-            <div class="item-info">
-                <span>02. Custom</span>
-                <h3>Minimalist Occasion Cakes</h3>
-            </div>
+        <div class="item-info">
+            <span>02. Custom</span>
+            <h3>Minimalist Occasion Cakes</h3>
         </div>
+    </div>
 
-        <div class="item">
-            <div class="image-wrapper">
-                <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=800&q=80" alt="Cookies">
-            </div>
-            <div class="item-info">
-                <span>03. Classic</span>
-                <h3>Small-Batch Cookies</h3>
-            </div>
+    <div class="item">
+        <div class="image-wrapper">
+            <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=800&q=80" alt="Cookies">
         </div>
-
-        <div class="item">
-            <div class="image-wrapper">
-                <img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=800&q=80" alt="Chocolate">
-            </div>
-            <div class="item-info">
-                <span>04. Cacao</span>
-                <h3>Artisan Chocolates</h3>
-            </div>
+        <div class="item-info">
+            <span>03. Classic</span>
+            <h3>Small-Batch Cookies</h3>
         </div>
-    </main>
+    </div>
 
-    <footer>
-        <h2 style="font-family: 'DM Serif Display'; font-size: 2.5rem;">Taste the passion.</h2>
-        <a href="/order/" class="cta-btn">Order for Collection</a>
-    </footer>
+    <div class="item">
+        <div class="image-wrapper">
+            <img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=800&q=80" alt="Chocolate">
+        </div>
+        <div class="item-info">
+            <span>04. Cacao</span>
+            <h3>Artisan Chocolates</h3>
+        </div>
+    </div>
+</main>
 
-</body>
-</html>
+<footer>
+    <h2>Taste the passion.</h2>
+    <a href="{% url 'order' %}" class="cta-btn">Order for Collection</a>
+</footer>
+
+{% endblock %}

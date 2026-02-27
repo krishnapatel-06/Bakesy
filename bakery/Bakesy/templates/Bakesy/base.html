@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bakesy | Artisan Bakery{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===================== GLOBAL RESET & VARIABLES ===================== */
+        :root {
+            --cream: #FAF7F2;
+            --dusty-rose: #E2B4BD;
+            --sage: #9EB7A7;
+            --charcoal: #1A1A1A;
+            --white: #FFFFFF;
+            --soft-gray: #F4F4F4;
+            --transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* ===================== NAVIGATION ===================== */
+        nav {
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        nav.transparent {
+            background: transparent;
+            position: absolute;
+            width: 100%;
+        }
+
+        .logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.8rem;
+            text-decoration: none;
+            color: var(--charcoal);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active { color: var(--dusty-rose); }
+
+        .nav-right {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.5;
+        }
+
+        /* Order pill button variant (used on home page) */
+        .order-btn-nav {
+            border: 1px solid var(--charcoal);
+            padding: 8px 20px;
+            border-radius: 50px;
+        }
+
+        .order-btn-nav:hover {
+            background-color: var(--charcoal);
+            color: var(--white) !important;
+        }
+
+        /* ===================== COMMON FOOTER CTA ===================== */
+        .footer-cta {
+            background: var(--charcoal);
+            color: var(--white);
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .footer-cta h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .cta-link {
+            color: var(--white);
+            text-decoration: none;
+            border-bottom: 1px solid var(--dusty-rose);
+            padding-bottom: 5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+
+        .cta-link:hover { color: var(--dusty-rose); }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 18px 40px;
+            border: 1px solid var(--charcoal);
+            text-decoration: none;
+            color: var(--charcoal);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            transition: var(--transition);
+        }
+
+        .cta-btn:hover {
+            background: var(--charcoal);
+            color: var(--white);
+        }
+
+        /* ===================== ANIMATIONS ===================== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===================== RESPONSIVE NAV ===================== */
+        @media (max-width: 850px) {
+            nav {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .nav-links {
+                position: static;
+                transform: none;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .nav-right { display: none; }
+        }
+    </style>
+
+    {% block extra_styles %}{% endblock %}
+</head>
+<body>
+
+    <!-- =================== NAVIGATION =================== -->
+    <nav {% block nav_class %}{% endblock %}>
+        <a href="{% url 'home' %}" class="logo">Bakesy.</a>
+
+        <div class="nav-links">
+            <a href="{% url 'home' %}"      {% if request.resolver_match.url_name == 'home'     %}class="active"{% endif %}>Home</a>
+            <a href="{% url 'about' %}"     {% if request.resolver_match.url_name == 'about'    %}class="active"{% endif %}>About</a>
+            <a href="{% url 'products' %}"  {% if request.resolver_match.url_name == 'products' %}class="active"{% endif %}>Collection</a>
+            <a href="{% url 'location' %}"  {% if request.resolver_match.url_name == 'location' %}class="active"{% endif %}>Location</a>
+            <a href="{% url 'order' %}"     {% if request.resolver_match.url_name == 'order'    %}class="active order-btn-nav"{% else %}class="order-btn-nav"{% endif %}>Order Now</a>
+        </div>
+
+        <div class="nav-right">{% block nav_right %}Est. 2026{% endblock %}</div>
+    </nav>
+    <!-- =================== END NAVIGATION =================== -->
+
+    {% block content %}{% endblock %}
+
+    {% block extra_scripts %}{% endblock %}
+
+</body>
+</html>
